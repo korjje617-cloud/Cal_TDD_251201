@@ -42,4 +42,42 @@ public class CalcTest {
     public void test6() {
         assertThat(Calc.run("50 - 30")).isEqualTo(20);
     }
+
+    @Test
+    @DisplayName("10 + 20 + 30 == 60")
+    public void test7() {
+        assertThat(Calc.run2("10 + 20 + 30")).isEqualTo(60);
+    }
+
+    @Test
+    @DisplayName("10 + 20 + 30 + 40 == 100")
+    public void test8() {
+        assertThat(Calc.run2("10 + 20 + 30 + 40")).isEqualTo(100);
+    }
+
+/*
+    @Test
+    @DisplayName("10 - 20 + 30")
+    public void test8() {
+        assertThat(Calc.run("10 - 20 + 30")).isEqualTo(20);
+    }
+
+    @Test
+    @DisplayName("10 - 10 - 10 - 10 + 10 + 10 - 10")
+    public void test9() {
+        assertThat(Calc.run("10 - 10 - 10 - 10 + 10 + 10 - 10")).isEqualTo(-10);
+    }
+
+    @Test
+    @DisplayName("10 * 10 * 10")
+    public void test10() {
+        assertThat(Calc.run("10 * 10 * 10")).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("10 + 5 * 2")
+    public void test11() {
+        assertThat(Calc.run("10 + 5 * 2")).isEqualTo(20);
+    }
+ */
 }
