@@ -3,6 +3,7 @@ package org.example;
 public class Calc {
 
 /*
+============== v1 ==============
     public static int run(String exp) {
 
         boolean needToPlus = exp.contains("+");
@@ -27,7 +28,7 @@ public class Calc {
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
-
+============== v2 ==============
     public static int run(String exp) {
 
         boolean needToPlus = exp.contains("+");
@@ -67,8 +68,7 @@ public class Calc {
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
-*/
-
+============== v3 ==============
     public static int run(String exp) {
         System.out.println("exp1 : " + exp);
 
@@ -92,5 +92,24 @@ public class Calc {
 //        throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
 
+}
+
+ */
+
+    public static int run(String exp) {
+
+        exp = exp.replace("- ", "+ -");
+
+        String[] bits = exp.split(" \\+ ");
+
+        int answer = 0;
+
+        for (int i = 0; i < bits.length; i++) {
+            int a = Integer.parseInt(bits[i]);
+            answer += a;
+
+        }
+        return answer;
+    }
 
 }
