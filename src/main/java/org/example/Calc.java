@@ -93,7 +93,7 @@ public class Calc {
     //        throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
         }
     }
-    ============== v4 ==============
+    ============== v4 내 풀이 ==============
         public static int run(String exp) {
 
             exp = exp.replace("- ", "+ -");
@@ -110,8 +110,8 @@ public class Calc {
             return answer;
         }
     }
-    */
 
+    ============== v5 내 풀이 ==============
     public static int run(String exp) {
 
         exp = exp.replace("- ", "+ -");
@@ -146,3 +146,56 @@ public class Calc {
     }
 }
 
+============== v4 강사님 풀이  ==============
+    public static int run(String exp) {
+        System.out.println("exp1 : " + exp);
+
+        exp = exp.replace("- ", "+ -");
+
+        System.out.println("exp2 : " + exp);
+
+        String[] bits = exp.split(" \\+ ");
+
+        int sum = 0;
+        for (int i = 0; i < bits.length; i++) {
+            sum += Integer.parseInt(bits[i]);
+        }
+        return sum;
+    }
+}
+
+테스트 12부터 풀기
+*/
+    public static int run(String exp) {
+
+        exp = exp.replace("- ", "+ -");
+
+        boolean needToPlus = exp.contains("+");
+        boolean needToMulti = exp.contains("*");
+
+        String[] bits = null;
+
+        if (needToPlus) {
+            bits = exp.split(" \\+ ");
+        } else if (needToMulti) {
+            bits = exp.split(" \\* ");
+        }
+
+        int answer = 0;
+
+        if (needToPlus){
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer += a;
+            }
+        } else if (needToMulti){
+
+            answer = 1;
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer *= a;
+            }
+        }
+        return answer;
+    }
+}

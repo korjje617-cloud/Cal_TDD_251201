@@ -75,13 +75,13 @@ public class CalcTest {
         assertThat(Calc.run("10 * 10 * 10")).isEqualTo(1000);
     }
 
-/*
+
     @Test
     @DisplayName("10 + 5 * 2")
     public void test12() {
         assertThat(Calc.run("10 + 5 * 2")).isEqualTo(20);
     }
-
+/*
     @Test
     @DisplayName("10 * 20 + 10 + 5 * 2")
     public void test13() {
