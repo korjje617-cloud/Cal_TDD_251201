@@ -361,43 +361,52 @@ public class Calc {
      */
 
     public static int run(String exp) {
-
         exp = exp.replace("- ", "+ -");
+        exp = exp.replace("(", "");
+        exp = exp.replace(")", "");
 
-        boolean needToPlus = exp.contains("+");
+        if (!exp.contains(" ")) {
+            return Integer.parseInt(exp);
+        }
+
+
+
         boolean needToMulti = exp.contains("*");
+        boolean needToPlus = exp.contains("+");
 
         boolean needToCompound = needToPlus && needToMulti;
 
         if (needToCompound) {
-            String[] bits = exp.split(" \\+ ", 2);
+            String[] bits = exp.split(" \\+ ");
 
-            return Integer.parseInt(bits[0]) + run(bits[1]);
+            String newExp = Arrays.stream(bits)
+                    .mapToInt(Calc::run)
+                    .mapToObj(e -> e + "")
+                    .collect(Collectors.joining(" + "));
+
+            return run(newExp);
         }
-
-        String[] bits = null;
 
         if (needToPlus) {
-            bits = exp.split(" \\+ ");
+            String[] bits = exp.split(" \\+ ");
+            int sum = 0;
+
+            for (int i = 0; i < bits.length; i++) {
+                sum += Integer.parseInt(bits[i]);
+            }
+
+            return sum;
         } else if (needToMulti) {
-            bits = exp.split(" \\* ");
-        }
+            String[] bits = exp.split(" \\* ");
 
-        int answer = 0;
+            int sum = 1;
 
-        if (needToPlus){
             for (int i = 0; i < bits.length; i++) {
-                int a = Integer.parseInt(bits[i]);
-                answer += a;
+                sum *= Integer.parseInt(bits[i]);
             }
-        } else if (needToMulti){
 
-            answer = 1;
-            for (int i = 0; i < bits.length; i++) {
-                int a = Integer.parseInt(bits[i]);
-                answer *= a;
-            }
+            return sum;
         }
-        return answer;
+        return 0;
     }
 }
