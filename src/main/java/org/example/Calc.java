@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class Calc {
 
     /*
@@ -238,8 +241,7 @@ public class Calc {
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
-
-*/
+============== v7 내 풀이  ==============
     public static int run(String exp) {
 
         exp = exp.replace("- ", "+ -");
@@ -281,4 +283,121 @@ public class Calc {
         return answer;
     }
 }
+============== v8 강사님 풀이  ==============
+                마이너스 버그
+    public static int run(String exp) {
 
+        if (!exp.contains(" ")) {
+            return Integer.parseInt(exp);
+        }
+
+        boolean needToMulti = exp.contains("*");
+        boolean needToPlus = exp.contains("+");
+
+        boolean needToCompound = needToPlus && needToMulti;
+
+        exp = exp.replace("- ", "+ -");
+
+        if (needToCompound) {
+            String[] bits = exp.split(" \\+ ");
+
+            String newExp = Arrays.stream(bits)
+                    .mapToInt(Calc::run)
+                    .mapToObj(e -> e + "")
+                    .collect(Collectors.joining(" + "));
+//1
+//            StringBuilder sb = new StringBuilder();
+//
+//            for (int i = 0; i < bits.length; i++) {
+//                int result = Calc.run(bits[i]);
+//                sb.append(result);
+//
+//                // 마지막 요소가 아니면 " + " 추가
+//                if (i < bits.length - 1) {
+//                    sb.append(" + ");
+//                }
+//            }
+//
+//            String newExp = sb.toString();
+
+//2
+//            String newExp = "";
+//
+//            for (int i = 0; i < bits.length; i++) {
+//                int result = Calc.run(bits[i]);
+//                newExp += result;
+//
+//                if (i < bits.length - 1) {
+//                    newExp += " + ";
+//                }
+//            }
+
+            return run(newExp);
+        }
+
+        if (needToPlus) {
+            String[] bits = exp.split(" \\+ ");
+            int sum = 0;
+
+            for (int i = 0; i < bits.length; i++) {
+                sum += Integer.parseInt(bits[i]);
+            }
+
+            return sum;
+        } else if (needToMulti) {
+            String[] bits = exp.split(" \\* ");
+
+            int sum = 1;
+
+            for (int i = 0; i < bits.length; i++) {
+                sum *= Integer.parseInt(bits[i]);
+            }
+
+            return sum;
+        }
+        return 0;
+    }
+}
+     */
+
+    public static int run(String exp) {
+
+        exp = exp.replace("- ", "+ -");
+
+        boolean needToPlus = exp.contains("+");
+        boolean needToMulti = exp.contains("*");
+
+        boolean needToCompound = needToPlus && needToMulti;
+
+        if (needToCompound) {
+            String[] bits = exp.split(" \\+ ", 2);
+
+            return Integer.parseInt(bits[0]) + run(bits[1]);
+        }
+
+        String[] bits = null;
+
+        if (needToPlus) {
+            bits = exp.split(" \\+ ");
+        } else if (needToMulti) {
+            bits = exp.split(" \\* ");
+        }
+
+        int answer = 0;
+
+        if (needToPlus){
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer += a;
+            }
+        } else if (needToMulti){
+
+            answer = 1;
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer *= a;
+            }
+        }
+        return answer;
+    }
+}
