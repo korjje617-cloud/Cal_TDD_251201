@@ -239,47 +239,46 @@ public class Calc {
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
 
-
-
 */
-    public static int run(String exp) { // 10 + 5 * 2
-
-        boolean needToMulti = exp.contains("*");
-        boolean needToPlus = exp.contains("+");
-
-        boolean needToCompound = needToPlus && needToMulti;
+    public static int run(String exp) {
 
         exp = exp.replace("- ", "+ -");
 
+        boolean needToPlus = exp.contains("+");
+        boolean needToMulti = exp.contains("*");
+
+        boolean needToCompound = needToPlus && needToMulti;
+
         if (needToCompound) {
-            String[] bits = exp.split(" \\+ ");
+            String[] bits = exp.split(" \\+ ", 2);
 
             return Integer.parseInt(bits[0]) + run(bits[1]);
         }
 
+        String[] bits = null;
+
         if (needToPlus) {
-            String[] bits = exp.split(" \\+ ");
-            int sum = 0;
-
-            for (int i = 0; i < bits.length; i++) {
-                sum += Integer.parseInt(bits[i]);
-            }
-
-            return sum;
+            bits = exp.split(" \\+ ");
         } else if (needToMulti) {
-            String[] bits = exp.split(" \\* ");
-
-            int sum = 1;
-
-            for (int i = 0; i < bits.length; i++) {
-                sum *= Integer.parseInt(bits[i]);
-            }
-
-            return sum;
+            bits = exp.split(" \\* ");
         }
 
+        int answer = 0;
 
-        throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
+        if (needToPlus){
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer += a;
+            }
+        } else if (needToMulti){
+
+            answer = 1;
+            for (int i = 0; i < bits.length; i++) {
+                int a = Integer.parseInt(bits[i]);
+                answer *= a;
+            }
+        }
+        return answer;
     }
 }
 
