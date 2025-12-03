@@ -9,6 +9,7 @@ public class Calc {
         // 괄호 제거
         exp = stripOuterBrackets(exp);
 
+
         // 그냥 숫자만 들어올 경우 바로 리턴
         if (!exp.contains(" ")) {
             return Integer.parseInt(exp);
@@ -20,6 +21,30 @@ public class Calc {
         boolean needToCompound = needToPlus && needToMulti;
 
         exp = exp.replace("- ", "+ -");
+        // ----- 10 + (10 + 5) 해결
+        if (needToSplit) {
+            if (exp.charAt(0) != '(') {
+
+                int innerBracketsCount = 0;
+                int innerSplitPoint = -1;
+
+                for (int i = 0; i < exp.length(); i++) {
+
+                    if (exp.charAt(i) == '(') {
+                        innerBracketsCount++;
+                    }
+                    if (innerBracketsCount == 1) {
+                        innerSplitPoint = i;
+                        break;
+                    }
+                }
+                String firstExp = exp.substring(0, innerSplitPoint - 3);
+                String secondExp = exp.substring(innerSplitPoint);
+
+                return Calc.run(firstExp) + Calc.run(secondExp);
+            }
+        }
+        // -----
 
         if (needToSplit) {
             int bracketsCount = 0;
@@ -76,7 +101,6 @@ public class Calc {
 
             return sum;
         }
-
 
         throw new RuntimeException("해석 불가 : 올바른 계산식이 아님");
     }
