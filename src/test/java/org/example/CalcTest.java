@@ -136,7 +136,7 @@ public class CalcTest {
     }
 
     @Test
-    @DisplayName("10 + (10 + 5) == 25")
+    @DisplayName("10 + ((10 + 5)) == 25")
     public void test22() {
         assertThat(Calc.run("10 + (10 + 5)")).isEqualTo(25);
     }
