@@ -74,7 +74,6 @@ public class CalcTest {
         assertThat(Calc.run("10 * 10 * 10")).isEqualTo(1000);
     }
 
-
     @Test
     @DisplayName("10 + 5 * 2")
     public void test12() {
@@ -151,7 +150,7 @@ public class CalcTest {
     @Test
     @DisplayName("-(8 + 2) * -(7 + 3) + 5 == 105")
     public void test24() {
-        assertThat(Calc.run("-(8 + 2) * -(7 - 3) + 5")).isEqualTo(105);
+        assertThat(Calc.run("-(8 + 2) * -(7 + 3) + 5")).isEqualTo(105);
     }
 
     @Test
